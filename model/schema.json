@@ -1,0 +1,491 @@
+{
+    "friendlyName" : "Payment in full or partial",
+    "logQueries" : true,
+    "uniqueName" : "Payment-Type",
+    "defaults" : {
+        "defaults" : {
+            "assistant_initiation" : "task://greeting",
+            "fallback" : "task://fallback",
+            "collect" : {
+                "validate_on_failure" : "task://collect_fallback"
+            }
+        }
+    },
+    "styleSheet" : {
+        "style_sheet" : {
+            "collect" : {
+                "validate" : {
+                    "on_failure" : {
+                        "repeat_question" : false,
+                        "messages" : [
+                            {
+                                "say" : {
+                                    "speech" : "I didn't get that. What did you say?"
+                                }
+                            },
+                            {
+                                "say" : {
+                                    "speech" : "I still didn't catch that. Please repeat."
+                                }
+                            },
+                            {
+                                "say" : {
+                                    "speech" : "Let's try one last time. Say it again please."
+                                }
+                            }
+                        ]
+                    },
+                    "on_success" : { "say" : { "speech" : "" } },
+                    "max_attempts" : 4
+                }
+            },
+            "voice" : {
+                "say_voice" : "Polly.Matthew"
+            },
+            "name" : ""
+        }
+    },
+    "fieldTypes" : [
+        {
+            "uniqueName" : "PAYMENT_TYPE",
+            "values" : [
+                {
+                    "language" : "en-US",
+                    "value" : "full",
+                    "synonymOf" : null
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay full",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "full payment",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay fully",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay full balance",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "painful",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "hateful",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay balance",
+                    "synonymOf" : "full"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "partial",
+                    "synonymOf" : null
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "arrangement",
+                    "synonymOf" : null
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "make an arrangement",
+                    "synonymOf" : "arrangement"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "payment arrangement",
+                    "synonymOf" : "arrangement"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay with arrangement",
+                    "synonymOf" : "arrangement"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "partially",
+                    "synonymOf" : "partial"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay partial",
+                    "synonymOf" : "partial"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "partial payment",
+                    "synonymOf" : "partial"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "pay partially",
+                    "synonymOf" : "partial"
+                }
+            ]
+        }
+    ],
+    "tasks" : [
+        {
+            "uniqueName" : "payment_partial",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "payment_full",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "yes_no",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [
+                {
+                    "uniqueName" : "yes_no",
+                    "fieldType" : "Twilio.YES_NO"
+                }
+            ],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's it"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's not correct"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that't not it"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's incorrect"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} please"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} thank you"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's right"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's wrong"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} it is correct"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} it is incorrect"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "arrangement_payment",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "collect_partial_Amount",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [
+                {
+                    "uniqueName" : "cents",
+                    "fieldType" : "Twilio.NUMBER"
+                },
+                {
+                    "uniqueName" : "dollars",
+                    "fieldType" : "Twilio.NUMBER"
+                }
+            ],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "${dollars}.{cents}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "I want to pay {dollars} dollars {cents} cents"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars} dollars {cents} cents"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "I want to pay {dollars} {cents}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars} {cents}"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "payment_type",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [
+                {
+                    "uniqueName" : "payment_type",
+                    "fieldType" : "PAYMENT_TYPE"
+                }
+            ],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{payment_type}"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "collect_fallback",
+            "actions" : {
+                "actions" : [
+                    {
+                        "say" : "Looks like I'm having trouble. Apologies for that. Let's start again, how can I help you today?"
+                    },
+                    { "listen" : true }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "greeting",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hi there."
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "sup"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "whatsup"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hey"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hello"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "what can you do"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "what do you do"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hi there"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "yo"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "what'us up"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "Hello."
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "heya"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hi!"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "good afternoon"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "Hi"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "good morning"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "fallback",
+            "actions" : {
+                "actions" : [
+                    {
+                        "say" : "I'm sorry didn't quite get that. Please say that again."
+                    },
+                    { "listen" : true }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "goodbye",
+            "actions" : {
+                "actions" : [
+                    {
+                        "say" : "Thank you! Please reach out again if you need anything. Goodbye."
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "good bye"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "no thanks"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "that's all"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "cancel"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "bye bye"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "stop"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "see ya"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "stop talking"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "that would be all thanks"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "goodbye"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "goodnight"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "that is all thank you"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "go away"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "that's all for today"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "no"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "that would be all"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "no thanks"
+                }
+            ]
+        }
+    ],
+    "modelBuild" : {
+        "uniqueName" : "PaymentType_5-1-2021_1.27.25am"
+    }
+}
