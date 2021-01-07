@@ -15,29 +15,26 @@ exports.yes_no =async function(context, event, callback) {
 
   Remember.task_fail_counter = 0;
   Remember.repeat = false;
-
-  console.log(event.Field_yes_no_Value);
+  console.log("custom_yes_no: " + event.Field_custom_yes_no_Value);
+  console.log("yes_no: "+event.Field_yes_no_Value);
+  console.log("Memory.question: "+Memory.question);
 
   switch ( Memory.question ) {
     case 'payment_full':
-      if (event.Field_yes_no_Value === 'Yes') {
-        
-        Say = "transfer to payment method Bot";
-
+      if (event.Field_yes_no_Value === 'Yes' || event.Field_custom_yes_no_Value === '1') {        
+        //Say = `Your payment amount is $${Memory.payment_amount}. Do you want to change the amount.`;
+        Listen=false;
+        Redirect="task://collect_partial_Amount";
         break;
 
-      } else if (event.Field_yes_no_Value === 'No') {
-        Say = `You will now be asked to tell me the specific amount of your payment including both dollars and cents. `;
-      Prompt = `Please tell me the payment amount now.`;
-
-      Say += Prompt;
-      
-      Remember.payment_type = 'partial';
-
-      Listen = true;
-      Tasks=['payment_partial'];
-      
-
+      } 
+      else if (event.Field_yes_no_Value === 'No' || event.Field_custom_yes_no_Value === '2') {
+        // Say = `Do you want to pay less than your full balance, say yes or No. you can also press 1 for yes and 2 for no.`;     
+        // Remember.question="payment_partial";
+        // Remember.payment_type = 'partial';
+        // Listen = true;
+        // Tasks=['payment_partial'];
+        Redirect = 'task://partial_yes_no';
         break;
 
       } else {
@@ -46,148 +43,56 @@ exports.yes_no =async function(context, event, callback) {
 
         break;
       }
-case 'payment_partial':
-      if (event.Field_yes_no_Value === 'Yes') {
-        
-        Redirect = 'task://collect_partial_Amount';
-
-
+    case 'payment_partial':
+      if (event.Field_yes_no_Value === 'Yes' || event.Field_custom_yes_no_Value === '1') {        
+        Redirect = 'task://payment_partial';
         break;
 
-      } else if (event.Field_yes_no_Value === 'No') {
-       Redirect="task://fallback";
-        // Say = `Okay then. `;
-        // Prompt = `Please provide me your Account Number, located in the upper right corner of the letter, starting with the first numerical digit.`;
+      } else if (event.Field_yes_no_Value === 'No' || event.Field_custom_yes_no_Value === '2') {
+        // Say = `Do you want to make a payment arrangement, say yes or No. you can also press 1 for yes and 2 for no.`;  
+        // Listen = true;   
+        // Remember.question="payment_arrangement";
+        // Remember.payment_type = 'arrangement';  
+        Redirect="task:arrangement_yes_no";     
+        break;
+
+      } else {
+        Say = false;
+        Redirect = 'task://fallback';
+
+        break;
+      }
+    case 'payment_arrangement':        
+        if (event.Field_yes_no_Value === 'Yes' || event.Field_custom_yes_no_Value === '1') {        
+          // Say="You will be transfered to payment arrangement Bot"
+          // Remember.payment_type = 'arrangement'; 
+          Redirect="task://payment_arrangement" ;    
+          break;
   
-        Say = false;
-        Listen = false;
-
-        break;
-
-      } else {
-        Say = false;
-        Redirect = 'task://fallback';
-
-        break;
-      }
-
+        } else if (event.Field_yes_no_Value === 'No' || event.Field_custom_yes_no_Value === '2') {
+          Say = false;
+          Redirect = 'task://agent_transfer';
+          Remember.question="";
+          Remember.payment_type = 'Nothing Select';       
+          break;
+  
+        } else {
+          Say = false;
+          Redirect = 'task://fallback1';
+  
+          break;
+        }  
     case 'payment_date_check':
     case 'payment_amount_check':
       if (event.Field_yes_no_Value === 'Yes') {
-        if ( Memory.payment_method === 'credit card' ) {
-          Collect = {
-            "name": "collect_cc",
-            "questions": [
-              {
-                "question": `We will need your credit card information. Please say or use your telephone keypad to provide credit card number.`,
-                "voice_digits": {
-                  "finish_on_key": "#",
-                  "num_digits": 16
-                },
-                "name": "credit_card_num",
-                "type": "Twilio.NUMBER_SEQUENCE"
-              }
-            ],
-            "on_complete": {
-              "redirect": "task://check_cc"
-            }
-          };
-          Say = false;
-        } else if ( Memory.payment_method === 'ACH' ) {
-          Collect = {
-            "name": "collect_routing",
-            "questions": [
-              {
-                "question": `We will need your bank account information. Say or use the telephone keypad to provide me the Routing number. `,
-                "voice_digits": {
-                  "finish_on_key": "#"
-                },
-                "name": "routing_num",
-                "type": "Twilio.NUMBER_SEQUENCE"
-              }
-            ],
-            "on_complete": {
-              "redirect": "task://check_routing_number"
-            }
-          };
-          Say = false;
-        }
-
+        //Say="you will be transfered to Payment Method Bot."
+        Listen=false;
+        Redirect="task://payment_partial";
         break;
 
-      } else if (event.Field_yes_no_Value === 'No') {
-
-        if ( Memory.payment_type === 'partial' ) {
-          Say = 'Alright. Please tell me the payment amount again.';
-  
-          Listen = true;
-          Tasks = ['partial_payment'];
-        } else if ( Memory.payment_type === 'arrangement' ) {
-          let current_date = new Date();
-          let today_plus_30 = current_date;
-          today_plus_30.setDate(current_date.getDate() + 30);
-          today_plus_30 = current_date.toLocaleDateString('en-GB');
-
-          if ( Memory.date_check === 1 ) {
-            Collect = {
-              "name": "collect_second_date",
-              "questions": [
-                {
-                  "question": `Alright, tell me again. Which date do you want to make the second payment, it has to be before <say-as interpret-as="date" format="dmy">${today_plus_30}</say-as>.`,
-                  "name": "second_date",
-                  "type": "Twilio.DATE"
-                },
-              ],
-              "on_complete": {
-                "redirect": "task://arrangement_payment"
-              }
-            };
-
-            Remember.second_payment_date = '';
-            Say = false;
-          } else if ( Memory.date_check === 2 ) {
-            Collect = {
-              "name": "collect_payment_dates",
-              "questions": [
-                {
-                  "question": `Alright, please say the date you want to make the first payment, it has to be before <say-as interpret-as="date" format="dmy">${today_plus_30}</say-as>.`,
-                  "name": "first_date",
-                  "type": "Twilio.DATE"
-                },
-                {
-                  "question": `Which date do you want to make the second payment, it has to be before <say-as interpret-as="date" format="dmy">${today_plus_30}</say-as>.`,
-                  "name": "second_date",
-                  "type": "Twilio.DATE"
-                },
-              ],
-              "on_complete": {
-                "redirect": "task://arrangement_payment"
-              }
-            };
-            Remember.first_payment_date = '';
-            Remember.second_payment_date = '';
-            Say = false;
-          } else if ( Memory.date_check === 3 ) {
-            Collect = {
-              "name": "collect_start_date",
-              "questions": [
-                {
-                  "question": `Alright, tell me again the date you want to make the first payment, it has to be before <say-as interpret-as="date" format="dmy">${today_plus_30}</say-as>.`,
-                  "name": "start_date",
-                  "type": "Twilio.DATE"
-                }
-              ],
-              "on_complete": {
-                "redirect": "task://arrangement_payment"
-              }
-            };
-            Remember.start_payment_date = '';
-            Say = false;
-          }
-      
-          Say = false;
-        }
-
+      } else if (event.Field_yes_no_Value === 'No') {        
+        Say = false;
+        //Redirect = 'task://agent_transfer';
         break;
 
       } else {
@@ -382,10 +287,9 @@ case 'payment_partial':
     case 'payment_amount_incorrect':
       if (event.Field_yes_no_Value === 'Yes') {
         if ( Memory.payment_type === 'partial' ) {
-          Say = 'Alright. Please tell me the new payment amount.';
-
-          Listen = true;
-          Tasks = ['partial_payment'];
+          Say = false;
+          Listen=false;
+          Redirect = 'task://payment_partial';
         }
         // } else if ( Memory.payment_type === 'arrangement' ) {
         //   Say = 'Alright. Please tell me the new payment amount and frequency.';
@@ -795,7 +699,7 @@ case 'payment_partial':
       
     default:
       Say = false;
-      Redirect = 'task://fallback';
+      Redirect = 'task://fallback1';
 
       break;
   }

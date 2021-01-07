@@ -15,10 +15,11 @@ exports.greeting =async function(context, event, callback) {
   
     Remember.task_fail_counter = 0;
     Remember.repeat = false;
+    Remember.transfer_agent=false;
   // this update from VS code.
    // const payment_type = event.Field_payment_type_Value;
     
-    let userTotalBalance=800.00; // Default Amount for testing
+    let userTotalBalance=800.50; // Default Amount for testing
     if(Memory.userTotalBalance!=undefined)
       userTotalBalance=Number(Memory.userTotalBalance).toFixed(2);  
     console.log("userTotalBalance: "+userTotalBalance);

@@ -40,7 +40,7 @@
                 }
             },
             "voice" : {
-                "say_voice" : "Polly.Matthew"
+                "say_voice" : "Polly.Joanna-Neural"
             },
             "name" : ""
         }
@@ -52,6 +52,16 @@
                 {
                     "language" : "en-US",
                     "value" : "full",
+                    "synonymOf" : null
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "partial",
+                    "synonymOf" : null
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "arrangement",
                     "synonymOf" : null
                 },
                 {
@@ -91,16 +101,6 @@
                 },
                 {
                     "language" : "en-US",
-                    "value" : "partial",
-                    "synonymOf" : null
-                },
-                {
-                    "language" : "en-US",
-                    "value" : "arrangement",
-                    "synonymOf" : null
-                },
-                {
-                    "language" : "en-US",
                     "value" : "make an arrangement",
                     "synonymOf" : "arrangement"
                 },
@@ -133,17 +133,22 @@
                     "language" : "en-US",
                     "value" : "pay partially",
                     "synonymOf" : "partial"
+                },
+                {
+                    "language" : "en-US",
+                    "value" : "change",
+                    "synonymOf" : "partial"
                 }
             ]
         }
     ],
     "tasks" : [
         {
-            "uniqueName" : "payment_partial",
+            "uniqueName" : "payment_arrangement",
             "actions" : {
                 "actions" : [
                     {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
                     }
                 ]
             },
@@ -151,11 +156,11 @@
             "samples" : []
         },
         {
-            "uniqueName" : "payment_full",
+            "uniqueName" : "partial_yes_no",
             "actions" : {
                 "actions" : [
                     {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
                     }
                 ]
             },
@@ -163,162 +168,46 @@
             "samples" : []
         },
         {
-            "uniqueName" : "yes_no",
+            "uniqueName" : "dummy",
             "actions" : {
                 "actions" : [
                     {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
-                    }
-                ]
-            },
-            "fields" : [
-                {
-                    "uniqueName" : "yes_no",
-                    "fieldType" : "Twilio.YES_NO"
-                }
-            ],
-            "samples" : [
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no}"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} that's it"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} that's not correct"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} that't not it"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} that's incorrect"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} please"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} thank you"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} that's right"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} that's wrong"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} it is correct"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{yes_no} it is incorrect"
-                }
-            ]
-        },
-        {
-            "uniqueName" : "arrangement_payment",
-            "actions" : {
-                "actions" : [
-                    {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
-                    }
-                ]
-            },
-            "fields" : [],
-            "samples" : []
-        },
-        {
-            "uniqueName" : "collect_partial_Amount",
-            "actions" : {
-                "actions" : [
-                    {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
-                    }
-                ]
-            },
-            "fields" : [
-                {
-                    "uniqueName" : "cents",
-                    "fieldType" : "Twilio.NUMBER"
-                },
-                {
-                    "uniqueName" : "dollars",
-                    "fieldType" : "Twilio.NUMBER"
-                }
-            ],
-            "samples" : [
-                {
-                    "language" : "en-US",
-                    "taggedText" : "${dollars}.{cents}"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "I want to pay {dollars} dollars {cents} cents"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{dollars} dollars {cents} cents"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "I want to pay {dollars} {cents}"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{dollars} {cents}"
-                }
-            ]
-        },
-        {
-            "uniqueName" : "payment_type",
-            "actions" : {
-                "actions" : [
-                    {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
-                    }
-                ]
-            },
-            "fields" : [
-                {
-                    "uniqueName" : "payment_type",
-                    "fieldType" : "PAYMENT_TYPE"
-                }
-            ],
-            "samples" : [
-                {
-                    "language" : "en-US",
-                    "taggedText" : "{payment_type}"
-                }
-            ]
-        },
-        {
-            "uniqueName" : "collect_fallback",
-            "actions" : {
-                "actions" : [
-                    {
-                        "say" : "Looks like I'm having trouble. Apologies for that. Let's start again, how can I help you today?"
+                        "say" : {
+                            "speech" : "Are you able to pay balance in full, say yes or No. you can also press 1 for yes and 2 for no."
+                        }
                     },
-                    { "listen" : true }
+                    {
+                        "listen" : {
+                            "voice_digits" : {
+                                "redirects" : {
+                                    "1" : "task://yes_no",
+                                    "2" : "task://yes_no"
+                                },
+                                "finish_on_key" : "#",
+                                "num_digits" : 1
+                            }
+                        }
+                    },
+                    {
+                        "remember" : {
+                            "payment_amount" : 800.5,
+                            "repeat" : false,
+                            "question" : "payment_full",
+                            "payment_type" : "full",
+                            "task_fail_counter" : 0
+                        }
+                    }
                 ]
             },
             "fields" : [],
             "samples" : []
         },
         {
-            "uniqueName" : "greeting",
+            "uniqueName" : "agent_transfer",
             "actions" : {
                 "actions" : [
                     {
-                        "redirect" : "https://payment-type-5911-dev.twil.io/index"
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
                     }
                 ]
             },
@@ -326,82 +215,45 @@
             "samples" : [
                 {
                     "language" : "en-US",
-                    "taggedText" : "hi there."
+                    "taggedText" : "help"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "sup"
+                    "taggedText" : "helpdesk"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "whatsup"
+                    "taggedText" : "transfer me to an agent"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "hey"
+                    "taggedText" : "agent transfer"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "hello"
+                    "taggedText" : "I want talk to somebody"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "what can you do"
+                    "taggedText" : "please transfer me to a representative"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "what do you do"
+                    "taggedText" : "Please transfer me to an agent"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "hi there"
+                    "taggedText" : "I want to talk to a representative"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "yo"
+                    "taggedText" : "I want to talk to an agent"
                 },
                 {
                     "language" : "en-US",
-                    "taggedText" : "what'us up"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "Hello."
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "heya"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "hi!"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "good afternoon"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "Hi"
-                },
-                {
-                    "language" : "en-US",
-                    "taggedText" : "good morning"
+                    "taggedText" : "agent"
                 }
             ]
-        },
-        {
-            "uniqueName" : "fallback",
-            "actions" : {
-                "actions" : [
-                    {
-                        "say" : "I'm sorry didn't quite get that. Please say that again."
-                    },
-                    { "listen" : true }
-                ]
-            },
-            "fields" : [],
-            "samples" : []
         },
         {
             "uniqueName" : "goodbye",
@@ -483,9 +335,330 @@
                     "taggedText" : "no thanks"
                 }
             ]
+        },
+        {
+            "uniqueName" : "fallback",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "greeting",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hi there."
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "sup"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "whatsup"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hey"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hello"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "what can you do"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "what do you do"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hi there"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "yo"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "what'us up"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "Hello."
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "heya"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "hi!"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "good afternoon"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "Hi"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "good morning"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "collect_fallback",
+            "actions" : {
+                "actions" : [
+                    {
+                        "say" : "Looks like I'm having trouble. Apologies for that. Let's start again, how can I help you today?"
+                    },
+                    { "listen" : true }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "payment_type",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [
+                {
+                    "uniqueName" : "payment_type",
+                    "fieldType" : "PAYMENT_TYPE"
+                }
+            ],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{payment_type}"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "collect_partial_Amount",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [
+                {
+                    "uniqueName" : "cents",
+                    "fieldType" : "Twilio.NUMBER"
+                },
+                {
+                    "uniqueName" : "dollars",
+                    "fieldType" : "Twilio.NUMBER"
+                }
+            ],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars} dollars and {cents} cents"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "${dollars}.{cents}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "I want to pay {dollars} dollars {cents} cents"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars} dollars {cents} cents"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "I want to pay {dollars} {cents}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars} {cents}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars}.{cents}"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "arrangement_yes_no",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "yes_no",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [
+                {
+                    "uniqueName" : "yes_no",
+                    "fieldType" : "Twilio.YES_NO"
+                },
+                {
+                    "uniqueName" : "custom_yes_no",
+                    "fieldType" : "Twilio.NUMBER"
+                }
+            ],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's it"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's not correct"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that't not it"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's incorrect"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} please"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} thank you"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's right"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} that's wrong"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} it is correct"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{yes_no} it is incorrect"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{custom_yes_no}"
+                }
+            ]
+        },
+        {
+            "uniqueName" : "payment_full",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : []
+        },
+        {
+            "uniqueName" : "payment_partial",
+            "actions" : {
+                "actions" : [
+                    {
+                        "redirect" : "https://payment-type-8139-dev.twil.io/index"
+                    }
+                ]
+            },
+            "fields" : [],
+            "samples" : [
+                {
+                    "language" : "en-US",
+                    "taggedText" : "change the amount"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "partial payment "
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "partial"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "I want to pay a different amount "
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "need to change the amount"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "change the payment"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "let me change the payment amount"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "I want to pay some other amount"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "change now"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "amount change"
+                }
+            ]
         }
     ],
     "modelBuild" : {
-        "uniqueName" : "PaymentType_5-1-2021_1.27.25am"
+        "uniqueName" : "Payment-Type_7-1-2021_11.23.50pm"
     }
 }

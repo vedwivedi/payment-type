@@ -2,9 +2,9 @@
 
 exports.payment_partial =async function(context, event, callback) {
     try {
-      let Say;
+    let Say;
     let Prompt;
-    let Listen = true;
+    let Listen = false;
     let Collect = false;
     let Remember = {};
     let Tasks = false;
@@ -15,17 +15,36 @@ exports.payment_partial =async function(context, event, callback) {
   
     Remember.task_fail_counter = 0;
     Remember.repeat = false;
-    Remember.question="payment_partial";
+    Remember.userTotalBalance=Memory.userTotalBalance;
+    Remember.payment_type = 'partial';
     //const payment_type = event.Field_payment_type_Value;
     
-    
-    Say = "Do you want to pay less than your full balance, say yes or No. you can also press 1 for yes and 2 for no.";
-     Redirect="task://payment_partial";
-     Remember.payment_type = 'partial';
-     
-  
-        Listen = true;
-        Tasks=['payment_Method'];
+    // Say = `You will now be asked to tell me the specific amount of your payment including both dollars and cents. `;
+    // Prompt = `Please tell me the payment amount now.`;
+	  // Say += Prompt;
+    // Redirect="task://collect_partial_Amount";
+    // Remember.payment_type = 'partial';     
+    // Listen = true;
+        // Tasks=['payment_Method'];
+
+      Collect =  {
+          "name": "collect_Payment_Amount",
+          "questions": [
+            {
+              "question": "Please enter or say the amount you want to pay. Example, you can say 50 dollars and 25 cents.",
+              "name": "Payment_Amount",
+              "type": "Twilio.NUMBER",
+              "voice_digits": {
+                "num_digits": 10,
+                "finish_on_key": "#",                
+              }
+            }
+          ],
+          "on_complete": {
+            "redirect": 
+              "task://collect_partial_Amount"            
+          }
+        }
         
     //End of your code.
     
