@@ -21,11 +21,16 @@ jobs:
           node-version: '12.x'
       # Runs a single command using the runners shell
       - name: Install dependencies for the twilio function
-        run: npm Install twilio-cli
+        env:
+         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID_STG }}
+         TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY_SID_STG }}
+         TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET_STG }}  
+        run: npm Install twilio-cli -g
       - name: Install dependencies for the twilio function
         env:
          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID_STG }}
-         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN_STG }}         
+         TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY_SID_STG }}
+         TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET_STG }}         
         run: npm -i -g serverless
       - name: Install Serverless plugin for the twilio function        
         run: twilio plugin:install @twilio-labs/plugin-serverless
