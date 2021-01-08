@@ -17,21 +17,12 @@ exports.payment_partial =async function(context, event, callback) {
     Remember.repeat = false;
     Remember.userTotalBalance=Memory.userTotalBalance;
     Remember.payment_type = 'partial';
-    //const payment_type = event.Field_payment_type_Value;
     
-    // Say = `You will now be asked to tell me the specific amount of your payment including both dollars and cents. `;
-    // Prompt = `Please tell me the payment amount now.`;
-	  // Say += Prompt;
-    // Redirect="task://collect_partial_Amount";
-    // Remember.payment_type = 'partial';     
-    // Listen = true;
-        // Tasks=['payment_Method'];
-
-      Collect =  {
+    Collect =  {
           "name": "collect_Payment_Amount",
           "questions": [
             {
-              "question": "Please enter or say the amount you want to pay. Example, you can say 50 dollars and 25 cents.",
+              "question": "Please enter or say the amount you want to pay. Example, you can say 50 dollars and 25 cents. or you can enter as 5 0 Asterisk 2 5 .",
               "name": "Payment_Amount",
               "type": "Twilio.NUMBER",
               "voice_digits": {
@@ -44,14 +35,14 @@ exports.payment_partial =async function(context, event, callback) {
             "redirect": 
               "task://collect_partial_Amount"            
           }
-        }
+    }
         
     //End of your code.
     
     // This callback is what is returned in response to this function being invoked.
   const functions = Runtime.getFunctions();
   let path = functions['responseBuilder'].path;
-  //console.log("path:"+path);
+  
   let RB = require(path);
   await RB.responseBuilder(Say, Listen, Remember, Collect, Tasks, Redirect, Handoff, callback);
   

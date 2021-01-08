@@ -29,13 +29,12 @@ exports.partial_yes_no =async function(context, event, callback) {
             }            
           }
         };
-    //Tasks=['payment_partial']; 
+    
     //End of your code.
     
     // This callback is what is returned in response to this function being invoked.
   const functions = Runtime.getFunctions();
   let path = functions['responseBuilder'].path;
-  //console.log("path:"+path);
   let RB = require(path);
   await RB.responseBuilder(Say, Listen, Remember, Collect, Tasks, Redirect, Handoff, callback);
   
