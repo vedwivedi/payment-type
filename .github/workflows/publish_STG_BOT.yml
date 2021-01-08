@@ -33,6 +33,6 @@ jobs:
          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID_STG }}
          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY_SID_STG }}
          TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET_STG }} 
-        run: twilio autopilot:update --schema schema_STG.json --unique-name Payment-Type
+        run: twilio autopilot:update --schema model/schema_STG.json --unique-name Payment-Type
        
       
