@@ -1,8 +1,8 @@
 // This is your new function. To start, set the name and path on the left.
 
-exports.payment_full =async function(context, event, callback) {
+exports.partial_yes_no =async function(context, event, callback) {
     try {
-      let Say;
+    let Say;
     let Prompt;
     let Listen = true;
     let Collect = false;
@@ -15,34 +15,26 @@ exports.payment_full =async function(context, event, callback) {
   
     Remember.task_fail_counter = 0;
     Remember.repeat = false;
-    Remember.question="payment_full";
-    Remember.payment_type = 'full';
-    //const payment_type = event.Field_payment_type_Value;
+    Remember.question="payment_partial";
+    Remember.payment_type = 'partial';
     
-    
-    Say = "Are you able to pay balance in full, say yes or No. you can also press 1 for yes and 2 for no.";
-     //Redirect="task://payment_full";
-     Remember.payment_type = 'full';
-     Remember.payment_amount = Memory.userTotalBalance;
-  
-        Listen = {
+    Say = `Do you want to pay less than your full balance, say yes or No. you can also press 1 for yes and 2 for no.`;     
+    Listen = {
           "voice_digits": {
             "num_digits": 1,
             "finish_on_key": "#",
             "redirects": {
-              1: "task://collect_partial_Amount",
-              2: "task://partial_yes_no"
+              1: "task://payment_partial",
+              2: "task://arrangement_yes_no"
             }            
           }
         };
-        //Tasks=['payment_Method'];
-        
+    
     //End of your code.
     
     // This callback is what is returned in response to this function being invoked.
   const functions = Runtime.getFunctions();
   let path = functions['responseBuilder'].path;
-  //console.log("path:"+path);
   let RB = require(path);
   await RB.responseBuilder(Say, Listen, Remember, Collect, Tasks, Redirect, Handoff, callback);
   

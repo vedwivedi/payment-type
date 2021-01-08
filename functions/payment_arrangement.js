@@ -1,6 +1,6 @@
 // This is your new function. To start, set the name and path on the left.
 
-exports.greeting =async function(context, event, callback) {
+exports.payment_arrangement =async function(context, event, callback) {
     try {
       let Say;
     let Prompt;
@@ -15,28 +15,14 @@ exports.greeting =async function(context, event, callback) {
   
     Remember.task_fail_counter = 0;
     Remember.repeat = false;
-    Remember.transfer_agent=false;
-  // this update from VS code.
-   // const payment_type = event.Field_payment_type_Value;
-    
-    let userTotalBalance=800.50; // Default Amount for testing
-    if(Memory.userTotalBalance!=undefined)
-      userTotalBalance=Number(Memory.userTotalBalance).toFixed(2);  
-    console.log("userTotalBalance: "+userTotalBalance);
-    Remember.userTotalBalance=userTotalBalance;
-  
-    Say = `you can pay your full balance of $${userTotalBalance}, or you can make a partial payment or you can make a payment arranagement. Let us know what would you prefer.`;
-    Redirect='task://payment_full';
-    // Listen = true;
-    // Tasks=['payment_Full'];
-        
-     
+    Remember.payment_type = 'arrangement';
+    Say="You will be transfered to payment arrangement Bot"
+               
     //End of your code.
     
     // This callback is what is returned in response to this function being invoked.
   const functions = Runtime.getFunctions();
   let path = functions['responseBuilder'].path;
-  //console.log("path:"+path);
   let RB = require(path);
   await RB.responseBuilder(Say, Listen, Remember, Collect, Tasks, Redirect, Handoff, callback);
   

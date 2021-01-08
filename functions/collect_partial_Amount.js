@@ -12,83 +12,61 @@ exports.collect_partial_Amount =async function(context, event, callback) {
   let Handoff = false;
   
   const Memory = JSON.parse(event.Memory);
-
   Remember.task_fail_counter = 0;
   Remember.repeat = false;
 
+  let payment_amount=0.00;
+  
   const dollars = event.Field_dollars_Value;
   const cents = event.Field_cents_Value;
   
-  let userTotalBalance=800.00; // Default Amount for testing
-  if(Memory.userTotalBalance!=undefined)
-    userTotalBalance=Number(Memory.userTotalBalance).toFixed(2);  
-  console.log("AmountPay "+userTotalBalance);
-  
-  if ( dollars && cents ) {
-    const payment_amount = Number(dollars) + Number(cents) / 100;
-
-    if ( payment_amount >= 5 && payment_amount <= userTotalBalance ) {
-      Say = `Your payment amount is ${payment_amount} US dollars. `;
-      Prompt = `Do you want to proceed?`;
-    
-      Say += Prompt;
+  console.log("dollars: "+dollars+" cents: "+ cents);
+  if(Memory.question==="payment_full" && Memory.payment_amount!=undefined) {
+    payment_amount=Memory.payment_amount;
+  } 
+  else if ( dollars && cents ) {
+    payment_amount = Number(dollars) + Number(cents) / 100;
+  } 
+  else if(Memory.twilio.collected_data.collect_Payment_Amount.answers.Payment_Amount.answer != undefined) {           
+    payment_amount = Memory.twilio.collected_data.collect_Payment_Amount.answers.Payment_Amount.answer;
+    console.log("payment_amount: "+payment_amount);
+    if(payment_amount.includes("*"))
+    {
+      payment_amount =payment_amount.replace("*",".");
+    }
+    payment_amount=Number(payment_amount).toFixed(2)
+  }  
+  console.log("payment_amount: "+payment_amount);
+  console.log("Memory.userTotalBalance: "+Memory.userTotalBalance);
+  if ( payment_amount >= 5 && payment_amount <= Number(Memory.userTotalBalance) ) {
+      Say = `Your payment amount is $${payment_amount}. Do you want to change the amount.`;
       
       Remember.payment_amount = payment_amount;
       Remember.question = 'payment_amount_check';
     
       Listen = true;
-      Tasks=['yes_no', 'agent_transfer'];
-    } else if ( payment_amount < 5 ) {
-      Say = `Your payment amount is less than 5 US dollars, we accept only amount 5 US dollars or more. `;
-      Prompt = `Do you want to provide a new amount?`;
-    
-      Say += Prompt;
-      
-      Remember.question = 'payment_amount_incorrect';
-    
-      Listen = true;
-      Tasks=['yes_no', 'agent_transfer'];
-    } else if ( payment_amount > userTotalBalance ) {
-      Say = `Your payment amount is more than your balance amount. `;
-      Prompt = `Do you want to provide a new amount?`;
-    
-      Say += Prompt;
-      
-      Remember.question = 'payment_amount_incorrect';
-    
-      Listen = true;
-      Tasks=['yes_no', 'agent_transfer'];
-    }
-  } else {
-    Say = false;
-    Listen = false;
-    Remember.from_task = event.CurrentTask;
-    Redirect = 'task://fallback';
-  }
+      Tasks=['yes_no', 'agent_transfer', 'payment_partial'];
+  } 
+  else if ( payment_amount < 5 ) {
+      Say = `You entered the payment amount $${payment_amount} is less than $5, we accept only amount $5 or more. `;      
+      Listen = false;      
+      Redirect="task://payment_partial";
+
+  } 
+  else if ( payment_amount > Number(Memory.userTotalBalance) ) {
+      Say = `You entered the payment amount $${payment_amount} is more than your balance amount. `; 
+      Listen = false;
+      Redirect="task://payment_partial";
+  }  
 
   //End of your code.
   
   // This callback is what is returned in response to this function being invoked.
 const functions = Runtime.getFunctions();
 let path = functions['responseBuilder'].path;
-//console.log("path:"+path);
 let RB = require(path);
 await RB.responseBuilder(Say, Listen, Remember, Collect, Tasks, Redirect, Handoff, callback);
-    let requestObj= {
-      Say: Say,
-      Listen:Listen,
-      Remember:Remember,
-      Collect:Collect,
-      Tasks:Tasks,
-      Redirect:Redirect,
-      Handoff:Handoff,
-      callback:callback
-    };
-  let API_responseBuilder = context.fnURL + 'responseBuilder';
-  console.log(API_responseBuilder);
- let responseObj = await axios.post(API_responseBuilder, requestObj, {headers: { 'Content-Type': 'application/json'}});
- //console.log(JSON.stringify(responseObj));
-  callback(null, responseObj.data);
+  
   } catch (error) {  
   console.error(error);    
   callback( error);

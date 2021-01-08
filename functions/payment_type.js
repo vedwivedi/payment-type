@@ -22,6 +22,7 @@ exports.payment_type =async function(context, event, callback) {
   if(Memory.userTotalBalance!=undefined)
     userTotalBalance=Number(Memory.userTotalBalance).toFixed(2);  
   console.log("AmountPay "+userTotalBalance);
+  console.log("Memory.userTotalBalance: "+Memory.userTotalBalance);
 
   if ( payment_type ) {
     if ( payment_type  === 'full' ) {
@@ -41,20 +42,12 @@ exports.payment_type =async function(context, event, callback) {
         
       
     } else if ( payment_type === 'partial' ) {
-      Say = `You will now be asked to tell me the specific amount of your payment including both dollars and cents. `;
-      Prompt = `Please tell me the payment amount now.`;
-
-      Say += Prompt;
-      
-      Remember.payment_type = 'partial';
-
-      Listen = true;
-      Tasks=['partial_payment'];
+      Redirect="task://payment_partial";
+      Listen = false;
+      // Tasks=['partial_payment'];
     } else if ( payment_type === 'arrangement' ) {
-      Say = `We can split the balance in half which will make your payments each at ${userTotalBalance / 2} dollars. `;
-      Prompt = `Would you like to set this up now? say yes to confirm or no to look at another option.`;
-
-      Say += Prompt;
+      
+      Say ="";
       
       Remember.payment_type = 'arrangement';
       Remember.question = 'split_balance';
