@@ -21,7 +21,7 @@ jobs:
           node-version: '12.x'
       # Runs a single command using the runners shell
       - name: Install dependencies for the twilio function
-        run: npm Install twilio-cli -g
+        run: npm Install twilio-cli
       - name: Install dependencies for the twilio function
         env:
          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID_STG }}
