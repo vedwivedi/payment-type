@@ -16,10 +16,12 @@ exports.fallback =async function(context, event, callback) {
     console.log('Fallback Triggered.');
   
     const Memory = JSON.parse(event.Memory);
-    console.log("Memory: "+JSON.stringify(Memory));
-  if(Memory.task_fail_counter===undefined) // new line add
+    console.log("Memory: "+JSON.stringify(Memory));   
+    const from_task = Memory.from_task;
+
+    if(Memory.task_fail_counter===undefined) // new line add
      Remember.task_fail_counter=1;
-  else
+    else
     Remember.task_fail_counter = Memory.task_fail_counter + 1;
   
     if ( Memory.task_fail_counter > 2 ) {
@@ -27,12 +29,22 @@ exports.fallback =async function(context, event, callback) {
       Listen = false;
       Remember.task_fail_counter = 0;
       Redirect = 'task://agent_transfer';
-    } else {
-      Say = `I'm sorry, I didn't quite get that. Please say that again.`;
-      Listen = true;
-  
-      if ( Memory.from_task ) {
-        Tasks = [Memory.from_task, 'agent_transfer'];
+    } else { 
+      console.log("from_task: "+from_task );     
+      switch (from_task) {
+        case 'payment_partial':
+          {                  
+            Say = `I'm sorry, I didn't quite get that. Please Say or enter the amount you want to pay. Example, you can say 50 dollars and 25 cents. or you can enter as 5 0 Asterisk 2 5 .`;
+            Listen = true;
+            break;
+          } 
+        default:
+            Say = `I'm sorry, I didn't quite get that. Please Say again.`;
+            Listen = true;
+            break;
+      }
+      if ( from_task ) {
+        Tasks = [from_task, 'agent_transfer'];
       }
     }
   await RB.responseBuilder(Say, Listen, Remember, Collect, Tasks, Redirect, Handoff, callback);

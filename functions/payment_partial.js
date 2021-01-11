@@ -17,12 +17,13 @@ exports.payment_partial =async function(context, event, callback) {
     Remember.repeat = false;
     Remember.userTotalBalance=Memory.userTotalBalance;
     Remember.payment_type = 'partial';
+    Remember.from_task="payment_partial";
     
     Collect =  {
           "name": "collect_Payment_Amount",
           "questions": [
             {
-              "question": "Please enter or say the amount you want to pay. Example, you can say 50 dollars and 25 cents. or you can enter as 5 0 Asterisk 2 5 .",
+              "question": "Please tell me the amount you want to pay.",
               "name": "Payment_Amount",
               "type": "Twilio.NUMBER",
               "voice_digits": {

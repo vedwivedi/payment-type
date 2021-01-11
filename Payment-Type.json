@@ -7,7 +7,7 @@
             "assistant_initiation" : "task://greeting",
             "fallback" : "task://fallback",
             "collect" : {
-                "validate_on_failure" : "task://collect_fallback"
+                "validate_on_failure" : "task://fallback"
             }
         }
     },
@@ -18,11 +18,7 @@
                     "on_failure" : {
                         "repeat_question" : false,
                         "messages" : [
-                            {
-                                "say" : {
-                                    "speech" : "I didn't get that. What did you say?"
-                                }
-                            },
+                            { "say" : { "speech" : "" } },
                             {
                                 "say" : {
                                     "speech" : "I still didn't catch that. Please repeat."
@@ -36,7 +32,7 @@
                         ]
                     },
                     "on_success" : { "say" : { "speech" : "" } },
-                    "max_attempts" : 4
+                    "max_attempts" : 0
                 }
             },
             "voice" : {
@@ -482,6 +478,14 @@
             "samples" : [
                 {
                     "language" : "en-US",
+                    "taggedText" : "{dollars}*{cents}"
+                },
+                {
+                    "language" : "en-US",
+                    "taggedText" : "{dollars}{cents}"
+                },
+                {
+                    "language" : "en-US",
                     "taggedText" : "{dollars} dollars and {cents} cents"
                 },
                 {
@@ -659,6 +663,6 @@
         }
     ],
     "modelBuild" : {
-        "uniqueName" : "Payment-Type_7-1-2021_11.23.50pm"
+        "uniqueName" : "Payment-Type_11-1-2021_8.59.46pm"
     }
 }
