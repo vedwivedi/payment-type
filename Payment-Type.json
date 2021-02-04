@@ -621,6 +621,10 @@
             "samples" : [
                 {
                     "language" : "en-US",
+                    "taggedText" : "Change the amount."
+                },
+                {
+                    "language" : "en-US",
                     "taggedText" : "change the amount"
                 },
                 {

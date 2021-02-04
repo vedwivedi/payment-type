@@ -8,7 +8,7 @@ on:
       name:
         description: 'Bot Unique Name'
         required: true
-        default: 'payment-type'
+        default: 'Payment-Type'
 
 jobs:
   build:
