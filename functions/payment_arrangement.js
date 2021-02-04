@@ -11,12 +11,11 @@ exports.payment_arrangement =async function(context, event, callback) {
     let Redirect = false;
     let Handoff = false;
     
-    const Memory = JSON.parse(event.Memory);
-  
-    Remember.task_fail_counter = 0;
+    const Memory = JSON.parse(event.Memory); 
+    
     Remember.repeat = false;
-    Remember.payment_type = 'arrangement';
-    Say="You will be transfered to payment arrangement Bot"
+    Remember.payment_type = 3;
+    Say=""
                
     //End of your code.
     

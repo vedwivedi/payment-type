@@ -4,7 +4,7 @@ exports.arrangement_yes_no =async function(context, event, callback) {
     try {
     let Say;
     let Prompt;
-    let Listen = true;
+    let Listen = false;
     let Collect = false;
     let Remember = {};
     let Tasks = false;
@@ -13,10 +13,10 @@ exports.arrangement_yes_no =async function(context, event, callback) {
     
     const Memory = JSON.parse(event.Memory);
   
-    Remember.task_fail_counter = 0;
+    
     Remember.repeat = false;
-    //Remember.question="payment_arrangement";
-    Remember.payment_type = 'arrangement'; 
+    Remember.question="payment_arrangement";
+    Remember.payment_type = 3; 
     
     Say = `Do you want to make a payment arrangement, say yes or No. you can also press 1 for yes and 2 for no.`;  
     Listen = {

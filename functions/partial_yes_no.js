@@ -13,10 +13,10 @@ exports.partial_yes_no =async function(context, event, callback) {
     
     const Memory = JSON.parse(event.Memory);
   
-    Remember.task_fail_counter = 0;
+    
     Remember.repeat = false;
     Remember.question="payment_partial";
-    Remember.payment_type = 'partial';
+    Remember.payment_type = '2';
     
     Say = `Do you want to pay less than your full balance, say yes or No. you can also press 1 for yes and 2 for no.`;     
     Listen = {

@@ -27,17 +27,17 @@ exports.payment_type =async function(context, event, callback) {
   if ( payment_type ) {
     if ( payment_type  === 'full' ) {
       
-        Say = `To pay the amount of $ ${userTotalBalance}. `;
-      Prompt = `Please tell me the payment Method now.`;
+      Say = `You have selected to pay your full balance.`;
+      //Prompt = `Please tell me the payment Method now.`;
 
-      Say += Prompt;
+      //Say += Prompt;
       
       
-        Remember.payment_type = 'full';
+        Remember.payment_type = 1;
         Remember.payment_amount = userTotalBalance;
 
-      Listen = true;
-      Tasks=['payment_Method'];
+      Listen = false;
+      //Tasks=['payment_Method'];
       
         
       
@@ -49,11 +49,10 @@ exports.payment_type =async function(context, event, callback) {
       
       Say ="";
       
-      Remember.payment_type = 'arrangement';
-      Remember.question = 'split_balance';
+      Remember.payment_type = 3;
 
-      Listen = true;
-      Tasks=['yes_no', 'agent_transfer'];
+      Listen = false;
+      //Tasks=['yes_no', 'agent_transfer'];
     }
   } else {
     Say = false;

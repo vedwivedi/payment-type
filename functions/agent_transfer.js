@@ -13,8 +13,10 @@ exports.agent_transfer =async function(context, event, callback) {
     
     const Memory = JSON.parse(event.Memory);
   
-    Remember.transfer_agent=true;
-    Say = `Please hold the line while I transfer you to an agent.`;
+    Remember.transfer_agent = true;
+    Remember.payment_type = 4;
+    Listen=false;
+    Say = false;
   
     // This callback is what is returned in response to this function being invoked.
   const functions = Runtime.getFunctions();

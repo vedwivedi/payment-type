@@ -12,8 +12,6 @@ exports.collect_partial_Amount =async function(context, event, callback) {
   let Handoff = false;
   
   const Memory = JSON.parse(event.Memory);
-  Remember.task_fail_counter = 0;
-  Remember.repeat = false;
 
   let payment_amount=0.00;
   
