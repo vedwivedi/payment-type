@@ -45,8 +45,8 @@ exports.collect_partial_Amount =async function(context, event, callback) {
       Listen = true;
       Tasks=['yes_no', 'agent_transfer', 'payment_partial'];
   } 
-  else if ( payment_amount < 5 ) {
-      Say = `You entered the payment amount $${payment_amount} is less than $5, we accept only amount $5 or more. `;      
+  else if ( payment_amount < 25 ) {
+      Say = `You entered the payment amount $${payment_amount} is less than $25, we accept only amount $25 or more. `;      
       Listen = false;      
       Redirect="task://payment_partial";
 
