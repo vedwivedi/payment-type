@@ -59,7 +59,7 @@ exports.collect_partial_Amount =async function(context, event, callback) {
 
   //End of your code.
   
-  // This callback is what is returned in response to this function being invoked.
+  // This callback is what is returned in response to this function being invoked
 const functions = Runtime.getFunctions();
 let path = functions['responseBuilder'].path;
 let RB = require(path);
