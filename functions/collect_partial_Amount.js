@@ -36,7 +36,7 @@ exports.collect_partial_Amount =async function(context, event, callback) {
   }  
   console.log("payment_amount: "+payment_amount);
   console.log("Memory.userTotalBalance: "+Memory.userTotalBalance);
-  if ( payment_amount >= 5 && payment_amount <= Number(Memory.userTotalBalance) ) {
+  if ( payment_amount >= 25 && payment_amount <= Number(Memory.userTotalBalance) ) {
       Say = `Your payment amount is $${payment_amount}. Do you want to change the amount.`;
       
       Remember.payment_amount = payment_amount;
