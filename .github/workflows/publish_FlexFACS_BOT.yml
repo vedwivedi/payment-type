@@ -30,9 +30,9 @@ jobs:
         run: ls -al
       - name: Deploy Autopilot BOT
         env:
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID_FlexStg }}
-          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY_SID_FlexStg }}
-          TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET_FlexStg }} 
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID_FlexFACS }}
+          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY_SID_FlexFACS }}
+          TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET_FlexFACS }}  
         run: twilio autopilot:update --schema model/schema_FlexFACS.json --unique-name Payment-Type
        
       
